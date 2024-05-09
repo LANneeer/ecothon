@@ -1,5 +1,6 @@
 from django import forms
-from sensor.models import Car
+
+from users.models import Car
 
 
 class CarForm(forms.ModelForm):
