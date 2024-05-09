@@ -19,3 +19,8 @@ class AirQuality(models.Model):
 
     def __str__(self):
         return f"<{self.pk} - {self.co_level} - {self.pm25_level} - {self.so_level} - {self.quality_status}>"
+    
+    
+class CTO(models.Model):
+    password = models.CharField(max_length=255)
+    service_code = models.CharField(max_length=255)
