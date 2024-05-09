@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from sensor.views import custom_login, start_inspection, check_air_pollution
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('login/', custom_login, name='login'),
+    path('inspection/', start_inspection, name='start_inspection'),
+    path('check-air-pollution/', check_air_pollution, name='check_air_pollution'),
 ]

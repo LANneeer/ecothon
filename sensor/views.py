@@ -4,6 +4,11 @@ from django.shortcuts import render, redirect
 from sensor.forms import CarForm, UploadFileForm
 from sensor.models import AirQuality
 
+from django.contrib.auth import authenticate, login
+from .forms import CustomLoginForm, InspectionForm
+from django.core.files.storage import FileSystemStorage
+from .forms import PhotoUploadForm
+
 
 def home(request):
     return render(request, 'base.html')
@@ -47,3 +52,46 @@ def download_data(request):
 
 def success(request):
     return render(request, 'frame4.html')
+
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = CustomLoginForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            service_code = form.cleaned_data.get('service_code')
+            user = authenticate(username=username, password=password)
+            if user is not None and user.profile.service_code == service_code:
+                login(request, user)
+                return redirect('home')
+            else:
+                form.add_error(None, 'Invalid login details or service code')
+    else:
+        form = CustomLoginForm()
+    return render(request, 'login.html', {'form': form})
+
+def start_inspection(request):
+    if request.method == 'POST':
+        form = InspectionForm(request.POST)
+        if form.is_valid():
+            # Process the form data (e.g., save it or send it to another service)
+            return redirect('inspection_success')  # Redirect to a new URL for success
+    else:
+        form = InspectionForm()
+    return render(request, 'start_inspection.html', {'form': form})
+
+def check_air_pollution(request):
+    if request.method == 'POST':
+        form = PhotoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = request.FILES['photo']
+            fs = FileSystemStorage()
+            filename = fs.save(photo.name, photo)
+            uploaded_file_url = fs.url(filename)
+            # Here you could add logic to analyze the photo for air pollution
+            return redirect('results_page')  # assuming you redirect to a results page
+    else:
+        form = PhotoUploadForm()
+    return render(request, 'check_air_pollution.html', {'form': form})
+
