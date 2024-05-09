@@ -28,7 +28,7 @@ class Command(BaseCommand):
         engine_number = fake.random_number(digits=10)
         car_category = fake.random_element(elements=('Sedan', 'SUV', 'Hatchback', 'Convertible'))
         gas_cylinder_number = fake.random_number(digits=10)
-        car_number = fake.license_plate()
+        car_number = gov_reg_sign
         car_brand = fake.random_element(elements=('Toyota', 'Honda', 'Ford', 'Chevrolet', 'Hyundai'))
 
         # Create a new Car instance
