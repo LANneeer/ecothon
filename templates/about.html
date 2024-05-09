@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Our Team</h2>
+    <div class="row">
+        <!-- Team member -->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p><img class=" img-fluid" src="{% static 'media/team/person.jpeg' %}" alt="card image"></p>
+                                <h4 class="card-title">John Doe</h4>
+                                <p class="card-text">John is a web developer with over 5 years of experience.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Team member -->
+        <!-- Team member -->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p><img class=" img-fluid" src="{% static 'media/team/person.jpeg' %}" alt="card image"></p>
+                                <h4 class="card-title">John Doe</h4>
+                                <p class="card-text">John is a web developer with over 5 years of experience.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Team member -->
+    </div>
+</div>
+{% endblock %}

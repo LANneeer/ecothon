@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Air Quality Data</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CO</th>
+                <th>PM2.5</th>
+                <th>NO</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ data.co_level }}</td>
+                <td>{{ data.pm25_level }}</td>
+                <td>{{ data.so_level }}</td>
+                <td>{{ data.quality_status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{% url 'tech_review' %}" class="btn btn-primary">Save as CSV</a>
+    <a href="{% url 'tech_review' %}" class="btn btn-secondary">Back</a>
+</div>
+{% endblock %}

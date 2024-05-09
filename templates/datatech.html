@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Car Information</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Government Registration Sign</th>
+                <th>Owner</th>
+                <th>Technical Passport</th>
+                <th>Date of Release</th>
+                <th>Serial Number</th>
+                <th>Body Number</th>
+                <th>Frame Number</th>
+                <th>Engine Number</th>
+                <th>Car Category</th>
+                <th>Gas Cylinder Number</th>
+                <th>Car Number</th>
+                <th>Car Brand</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ car.gov_reg_sign }}</td>
+                <td>{{ car.owner.first_name }} {{ car.owner.last_name }}</td>
+                <td>{{ car.tech_pass }}</td>
+                <td>{{ car.date_of_release }}</td>
+                <td>{{ car.serial_number }}</td>
+                <td>{{ car.body_number }}</td>
+                <td>{{ car.frame_number }}</td>
+                <td>{{ car.engine_number }}</td>
+                <td>{{ car.car_category }}</td>
+                <td>{{ car.gas_cylinder_number }}</td>
+                <td>{{ car.car_number }}</td>
+                <td>{{ car.car_brand }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="text-center">Upload Car Photo</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="carPhoto">Car Photo</label>
+            <input type="file" class="form-control-file" id="carPhoto">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

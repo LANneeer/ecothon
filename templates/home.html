@@ -1,15 +1,11 @@
-<!-- home.html -->
 {% extends 'base.html' %}
 
 {% block content %}
-<main>
-    <div class="content-container">
-        <h1>Welcome to Ecoton</h1>
-        <p>This is the homepage of your environment-focused platform. Navigate through the site to find various functionalities like checking air pollution and vehicle inspection services.</p>
-        <div>
-            <a href="{% url 'check_air_pollution' %}" class="btn btn-info">Check Air Pollution</a>
-            <a href="{% url 'start_inspection' %}" class="btn btn-info">Vehicle Inspection</a>
-        </div>
-    </div>
-</main>
+<div class="container">
+    <h1 class="text-center">Welcome to Our Home Page</h1>
+    <p>This is the home page of our website. You can add more content here as needed.</p>
+
+    <a class="nav-link" href="{% url 'cto_registration' %}">Register</a>
+    <a class="nav-link" href="{% url 'cto_login' %}">Log In</a>
+</div>
 {% endblock %}

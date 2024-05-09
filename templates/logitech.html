@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Car Information</h2>
+    <div class="card">
+        <div class="card-body">
+            <form>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="govRegSign">Government Registration Sign</label>
+                    <input type="text" class="form-control" id="govRegSign" placeholder="Enter government registration sign">
+                </div>
+                <div class="form-group">
+                    <label for="techPass">Technical Passport</label>
+                    <input type="text" class="form-control" id="techPass" placeholder="Enter technical passport">
+                </div>
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

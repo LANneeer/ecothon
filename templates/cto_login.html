@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">CTO Login</h2>
+    <div class="card">
+        <div class="card-body">
+            <form>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="serviceCode">Service Code</label>
+                    <input type="text" class="form-control" id="serviceCode" placeholder="Enter your service code">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                </div>
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

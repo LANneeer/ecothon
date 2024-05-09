@@ -6,3 +6,4 @@ typing_extensions==4.11.0
 psycopg2==2.9.6
 psycopg2-binary==2.9.6
 gunicorn==21.2.0
+Faker==25.1.0

@@ -1,12 +1,7 @@
-from django.contrib.auth import authenticate, login
-from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
-from sensor.forms import CarForm, UploadFileForm
 from sensor.models import AirQuality
-from .forms import CustomLoginForm, InspectionForm
-from .forms import PhotoUploadForm
+from users.models import Car
 
 
 def home(request):
@@ -19,87 +14,33 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+#========
+
+def cto_registration(request):
+    return render(request, 'cto_registration.html')
 
 
-def submit_car_info(request):
-    if request.method == 'POST':
-        form = CarForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success')
-    else:
-        form = CarForm()
-    return render(request, 'frame1.html', {'form': form})
+def cto_login(request):
+    return render(request, 'cto_login.html')
 
 
-def file_upload(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            # handle_uploaded_file(request.FILES['file'])  # Assume this function processes the file.
-            return redirect('success')
-    else:
-        form = UploadFileForm()
-    return render(request, 'frame2.html', {'form': form})
+def tech_review(request):
+    return render(request, 'logitech.html')
 
 
-def display_air_quality(request):
-    data = AirQuality.objects.latest('id')
-    return render(request, 'frame3.html', {'data': data})
+def car_detail(request, car_id):
+    try:
+        car = Car.objects.get(id=car_id)
+    except Car.DoesNotExist:
+        car = Car.objects.first()  # TODO: delete this line
+    return render(request, 'datatech.html', {'car': car})
 
 
-def download_data(request):
-    # Implement the logic to download data, perhaps as a CSV file.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="data.csv"'
-    # Assume data_csv() generates CSV data.
-    # response.write(data_csv())
-    return response
+def loading(request):
+    return render(request, 'loading.html')
 
 
-def success(request):
-    return render(request, 'frame4.html')
+def air_quality(request):
+    air_quality_data = AirQuality.objects.all()
+    return render(request, 'showtech.html', {'data': air_quality_data})
 
-
-def custom_login(request):
-    if request.method == 'POST':
-        form = CustomLoginForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            service_code = form.cleaned_data.get('service_code')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.profile.service_code == service_code:
-                login(request, user)
-                return redirect('home')
-            else:
-                form.add_error(None, 'Invalid login details or service code')
-    else:
-        form = CustomLoginForm()
-    return render(request, 'login.html', {'form': form})
-
-
-def start_inspection(request):
-    if request.method == 'POST':
-        form = InspectionForm(request.POST)
-        if form.is_valid():
-            # Process the form data (e.g., save it or send it to another service)
-            return redirect('inspection_success')  # Redirect to a new URL for success
-    else:
-        form = InspectionForm()
-    return render(request, 'start_inspection.html', {'form': form})
-
-
-def check_air_pollution(request):
-    if request.method == 'POST':
-        form = PhotoUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            photo = request.FILES['photo']
-            fs = FileSystemStorage()
-            filename = fs.save(photo.name, photo)
-            uploaded_file_url = fs.url(filename)
-            # Here you could add logic to analyze the photo for air pollution
-            return redirect('results_page')  # assuming you redirect to a results page
-    else:
-        form = PhotoUploadForm()
-    return render(request, 'check_air_pollution.html', {'form': form})

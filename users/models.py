@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -8,8 +10,10 @@ from users.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True, editable=False, unique=True, auto_created=True, default=uuid.uuid4)
     iin = models.CharField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=255, null=False, blank=False)
+    last_name = models.CharField(max_length=255, null=False, blank=False)
     phone = models.CharField(max_length=255, unique=True)
     is_staff = models.BooleanField(
         _("staff status"),
