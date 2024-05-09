@@ -1,0 +1,19 @@
+/* css/style.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header img {
+    width: 150px;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 10px;
+}
