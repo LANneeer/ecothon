@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+
+  backend:
+    build: .
+    environment:
+      POSTGRES_HOST: "db"
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_PORT: "5432"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - myweb
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_HOST: "db"
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - myweb
+
+volumes:
+  postgres_data:
+
+networks:
+  myweb:
+    driver: bridge
