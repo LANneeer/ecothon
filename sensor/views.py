@@ -1,17 +1,24 @@
+from django.contrib.auth import authenticate, login
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from sensor.forms import CarForm, UploadFileForm
 from sensor.models import AirQuality
-
-from django.contrib.auth import authenticate, login
 from .forms import CustomLoginForm, InspectionForm
-from django.core.files.storage import FileSystemStorage
 from .forms import PhotoUploadForm
 
 
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
 
 
 def submit_car_info(request):
@@ -71,6 +78,7 @@ def custom_login(request):
         form = CustomLoginForm()
     return render(request, 'login.html', {'form': form})
 
+
 def start_inspection(request):
     if request.method == 'POST':
         form = InspectionForm(request.POST)
@@ -80,6 +88,7 @@ def start_inspection(request):
     else:
         form = InspectionForm()
     return render(request, 'start_inspection.html', {'form': form})
+
 
 def check_air_pollution(request):
     if request.method == 'POST':
@@ -94,4 +103,3 @@ def check_air_pollution(request):
     else:
         form = PhotoUploadForm()
     return render(request, 'check_air_pollution.html', {'form': form})
-

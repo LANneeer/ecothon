@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.auth.forms import AuthenticationForm
 from users.models import Car
 
 
@@ -18,7 +18,8 @@ class CarForm(forms.ModelForm):
 class UploadFileForm(forms.Form):
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
-class CustomLoginForm(forms.AuthenticationForm):
+
+class CustomLoginForm(AuthenticationForm):
     service_code = forms.CharField(max_length=100, required=True)
 
     class Meta:

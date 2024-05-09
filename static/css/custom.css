@@ -70,3 +70,59 @@ form button {
     border: none;
     cursor: pointer;
 }
+/* static/css/style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+.navbar .logo, .navbar-right a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px;
+    font-size: 18px;
+}
+
+.navbar .logo {
+    font-weight: bold;
+}
+
+.navbar-right {
+    float: right;
+}
+
+.content-container {
+    text-align: center;
+    padding: 50px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
