@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from sensor.infrastructure.strategy import car_brands_by_country, brand_to_country, get_eco_class, \
     get_emission_standards
 from sensor.models import AirQuality
-from users.models import Car
+from users.models import Car, User, ServiceStation
 from sensor import forms
 
 
@@ -23,54 +23,85 @@ def contact(request):
 
 
 def cto_registration(request):
-    # serviceCode = request.POST.get('serviceCode', None)
-    # password = request.POST.get('password', None)
+    """
+    CTO create account
+    :param request:
+    :return:
+    """
     if request.method == "POST":
-        form = forms.CTOForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
+        service_code = request.POST.get('service_code', None)
+        name = request.POST.get('name', None)
+        address = request.POST.get('address', None)
+        phone = request.POST.get('phone', None)
+        password = request.POST.get('password', None)
+        print(service_code, name, address, phone, password)
+        user = User.objects.create_user(
+            iin=service_code,
+            phone=phone,
+            password=password,
+        )
+        ServiceStation.objects.create(
+            code=service_code,
+            owner=user,
+            name=name,
+            address=address,
+            phone=phone,
+        )
         return redirect("cto_login")
-    return render(request, 'cto_registration.html', {'form': forms.CTOForm})
+    return render(request, 'cto_registration.html', {'form': forms.CTORegistrationForm})
     # return redirect("cto_login")
 
 
 def cto_login(request):
+    """
+    CTO get and compare, if show error message
+    :param request:
+    :return:
+    """
     if request.method == "POST":
-        print(request.POST)
-
-        form = forms.CTOForm(request.POST)
-        print(form.data.items())
-        print(request)
-        # try:
-        #     service_code_post = request.POST.get('serviceCode', None)
-        #     password_post = request.POST.get('password', None)
-        #     cto = CTO.objects.get(service_code=service_code_post, password=password_post)
-        #     request.session["_metadata"] = service_code_post
-        # except CTO.DoesNotExist:
-        #     return redirect('/')
+        service_code = request.POST.get('service_code', None)
+        password = request.POST.get('password', None)
+        print(service_code, password)
+        try:
+            ServiceStation.objects.get(code=service_code)
+            request.session["_metadata"] = service_code
+        except ServiceStation.DoesNotExist:
+            return render(request, 'cto_login.html', {'error': 'Service code or password is incorrect', "form": forms.CTOLoginForm})
         return redirect("tech_review")
-    return render(request, 'cto_login.html', {'form': forms.CTOLoginForm})
+    return render(request, 'cto_login.html', {'form': forms.CTOLoginForm, 'error': ""})
 
 
 def tech_review(request):
+    """
+    Getting tech_pass and gov number to search in DB if exists or not
+    :param request:
+    :return:
+    """
     if request.method == "POST":
-        # try:
-        #     print(request.POST)
-        #     tech_pass_post = request.POST.get('techPass', None)
-        #     print(tech_pass_post)
-        #     car = Car.objects.get(tech_pass=tech_pass_post)
-        #     print(car)
-        #     request.session["_metadata"] = tech_pass_post
-        # except Car.DoesNotExist:
-        #     return redirect('tech_review')
+        try:
+            gov_number_post = request.POST.get('gov_number', None)
+            tech_pass_post = request.POST.get('tech_pass', None)
+            Car.objects.get(tech_pass=tech_pass_post)
+            request.session["_metadata"] = tech_pass_post
+        except Car.DoesNotExist:
+            return render(request, 'logitech.html', {'error': 'Technical passport is incorrect', "form": forms.TechReviewForm})
         return redirect('car_detail')
-    return render(request, 'logitech.html', {'form': forms.TechReviewForm})
+    return render(request, 'logitech.html', {'error': '', 'form': forms.TechReviewForm})
 
 
 def car_detail(request):
+    """
+    Show car details
+    OK
+    :param request:
+    :return:
+    """
+    try:
+        tech_pass_post = request.session["_metadata"]
+        car = Car.objects.get(tech_pass=tech_pass_post)
+    except Car.DoesNotExist:
+        return render(request, 'logitech.html', {'error': 'Technical passport is incorrect', "form": forms.TechReviewForm})
     if request.method == "POST":
-        tech_pass_post = request.POST.get('techPass', None)
-        car = Car.objects.all().first()
         brand = brand_to_country(car.car_brand, car_brands_by_country)
         eco_class = get_eco_class(car.date_of_release.year, brand)
         mq9 = 0.5
@@ -84,11 +115,6 @@ def car_detail(request):
             quality_status=data["result"]
         )
         return redirect("air_quality")
-    try:
-        # car_id = request.session["_metadata"]
-        car = Car.objects.all().first()
-    except Car.DoesNotExist:
-        car = Car.objects.first()  # TODO: delete this line
     return render(request, 'datatech.html', {'car': car, 'form': forms.UploadFileForm})
 
 

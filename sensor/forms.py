@@ -24,19 +24,21 @@ class ContactForm(forms.Form):
 
 
 class CTORegistrationForm(forms.Form):
-    service_code = forms.CharField(label='Код услуги', max_length=100, required=True)
-    password = forms.CharField(label='Пароль', max_length=100, required=True)
-    confirm_password = forms.CharField(label='Подтвердите пароль', max_length=100, required=True)
+    service_code = forms.CharField(label='CTO code', max_length=100, required=True)
+    name = forms.CharField(label='name', max_length=100, required=False)
+    address = forms.CharField(label='address', max_length=100, required=True)
+    phone = forms.CharField(label='phone', max_length=100, required=True)
+    password = forms.CharField(label='password', max_length=100, required=True, widget=forms.PasswordInput())
 
 
 class CTOLoginForm(forms.Form):
-    service_code = forms.CharField(label='Код услуги', max_length=100, required=True)
-    password = forms.CharField(label='Пароль', max_length=100, required=True)
+    service_code = forms.CharField(label='CTO code', max_length=100, required=True)
+    password = forms.CharField(label='password', max_length=100, required=True, widget=forms.PasswordInput())
 
 
 class TechReviewForm(forms.Form):
-    gov_number = forms.CharField(label='Гос. номер', max_length=100, required=True)
-    tech_pass = forms.CharField(label='Тех. паспорт', max_length=100, required=True)
+    gov_number = forms.CharField(label='government number', max_length=100, required=True)
+    tech_pass = forms.CharField(label='tech passport', max_length=100, required=True)
 
 
 class UploadFileForm(forms.Form):
@@ -51,12 +53,12 @@ class CustomLoginForm(AuthenticationForm):
 
 
 class InspectionForm(forms.Form):
-    registration_number = forms.CharField(label='Гос. регистрационный знак', max_length=100, required=True)
-    document_number = forms.CharField(label='Номер техпаспорта', max_length=100, required=True)
+    registration_number = forms.CharField(label='Government registration number', max_length=100, required=True)
+    document_number = forms.CharField(label='tech passport', max_length=100, required=True)
 
 
 class PhotoUploadForm(forms.Form):
-    photo = forms.ImageField(label='Drop photo')
+    photo = forms.ImageField(label='Drop photo', required=True, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
 
 class CTOForm(forms.ModelForm):

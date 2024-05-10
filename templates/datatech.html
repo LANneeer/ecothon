@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
     <h2 class="text-center">Car Information</h2>
+    <div class="content-container" style="overflow: auto">
     <table class="table">
         <thead>
             <tr>
@@ -37,7 +38,7 @@
             </tr>
         </tbody>
     </table>
-
+    </div>
     <h2 class="text-center">Upload Car Photo</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

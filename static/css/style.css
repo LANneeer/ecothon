@@ -100,6 +100,7 @@ header {
 .content-container {
     text-align: center;
     padding: 50px;
+    overflow: auto;
 }
 
 footer {
@@ -125,4 +126,8 @@ footer {
 
 .btn:hover {
     background-color: #0056b3;
+}
+.table {
+    width: 100%;
+    box-sizing: border-box;
 }
