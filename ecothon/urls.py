@@ -26,7 +26,7 @@ urlpatterns = [
     path("cto_registration/", cto_registration, name='cto_registration'),
     path("cto_login/", cto_login, name='cto_login'),
     path("tech_review/", tech_review, name='tech_review'),
-    path("car_detail/<int:car_id>/", car_detail, name='car_detail'),
+    path("car_detail/", car_detail, name='car_detail'),
     path("loading/", loading, name='loading'),
     path("air_quality/", air_quality, name='air_quality'),
 

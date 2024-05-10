@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+
 from users.models import Car
 from .models import CTO
 
@@ -30,12 +31,13 @@ class CustomLoginForm(AuthenticationForm):
 class InspectionForm(forms.Form):
     registration_number = forms.CharField(label='Гос. регистрационный знак', max_length=100, required=True)
     document_number = forms.CharField(label='Номер техпаспорта', max_length=100, required=True)
-    
+
+
 class PhotoUploadForm(forms.Form):
     photo = forms.ImageField(label='Drop photo')
-    
-    
+
+
 class CTOForm(forms.ModelForm):
     class Meta:
         model = CTO
-        fields = ['password', 'descriservice_codeption']
+        fields = ['password', 'service_code']
