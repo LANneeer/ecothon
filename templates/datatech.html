@@ -41,10 +41,11 @@
     <h2 class="text-center">Upload Car Photo</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="carPhoto">Car Photo</label>
-            <input type="file" class="form-control-file" id="carPhoto">
-        </div>
+{#        <div class="form-group">#}
+{#            <label for="carPhoto">Car Photo</label>#}
+{#            <input type="file" class="form-control-file" id="carPhoto">#}
+{#        </div>#}
+        {{ form.file }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

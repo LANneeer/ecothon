@@ -7,14 +7,14 @@
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="govRegSign">Government Registration Sign</label>
-                    <input type="text" class="form-control" id="govRegSign" placeholder="Enter government registration sign">
-                </div>
-                <div class="form-group">
-                    <label for="techPass">Technical Passport</label>
-                    <input type="text" class="form-control" id="techPass" placeholder="Enter technical passport">
-                </div>
+{#                <div class="form-group">#}
+{#                    <label for="govRegSign">Government Registration Sign</label>#}
+{#                    <input type="text" class="form-control" id="govRegSign" placeholder="Enter government registration sign">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="techPass">Technical Passport</label>#}
+{#                    <input type="text" class="form-control" id="techPass" placeholder="Enter technical passport">#}
+{#                </div>#}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

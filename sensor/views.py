@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 
-from sensor.models import AirQuality, CTO
+from sensor.infrastructure.strategy import car_brands_by_country, brand_to_country, get_eco_class, \
+    get_emission_standards
+from sensor.models import AirQuality
 from users.models import Car
-from sensor.forms import CTOForm
+from sensor import forms
 
-from sensor.infrastructure.strategy import car_brands_by_country, brand_to_country, get_eco_class, get_emission_standards
 
 def home(request):
     return render(request, 'home.html')
@@ -16,23 +17,30 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
-#========
+
+
+# ========
 
 
 def cto_registration(request):
     # serviceCode = request.POST.get('serviceCode', None)
     # password = request.POST.get('password', None)
-    form = CTOForm(request.POST)
     if request.method == "POST":
+        form = forms.CTOForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
         return redirect("cto_login")
-    return render(request, 'cto_registration.html')
+    return render(request, 'cto_registration.html', {'form': forms.CTOForm})
     # return redirect("cto_login")
 
 
 def cto_login(request):
     if request.method == "POST":
+        print(request.POST)
+
+        form = forms.CTOForm(request.POST)
+        print(form.data.items())
+        print(request)
         # try:
         #     service_code_post = request.POST.get('serviceCode', None)
         #     password_post = request.POST.get('password', None)
@@ -41,7 +49,7 @@ def cto_login(request):
         # except CTO.DoesNotExist:
         #     return redirect('/')
         return redirect("tech_review")
-    return render(request, 'cto_login.html')
+    return render(request, 'cto_login.html', {'form': forms.CTOLoginForm})
 
 
 def tech_review(request):
@@ -56,7 +64,7 @@ def tech_review(request):
         # except Car.DoesNotExist:
         #     return redirect('tech_review')
         return redirect('car_detail')
-    return render(request, 'logitech.html')
+    return render(request, 'logitech.html', {'form': forms.TechReviewForm})
 
 
 def car_detail(request):
@@ -81,7 +89,7 @@ def car_detail(request):
         car = Car.objects.all().first()
     except Car.DoesNotExist:
         car = Car.objects.first()  # TODO: delete this line
-    return render(request, 'datatech.html', {'car': car})
+    return render(request, 'datatech.html', {'car': car, 'form': forms.UploadFileForm})
 
 
 def loading(request):
@@ -91,4 +99,3 @@ def loading(request):
 def air_quality(request):
     air_quality_data = AirQuality.objects.all().first()
     return render(request, 'showtech.html', {'data': air_quality_data})
-

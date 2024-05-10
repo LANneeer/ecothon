@@ -17,6 +17,28 @@ class CarForm(forms.ModelForm):
         }
 
 
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Имя', max_length=100, required=True)
+    email = forms.EmailField(label='Email', required=True)
+    message = forms.CharField(label='Сообщение', widget=forms.Textarea, required=True)
+
+
+class CTORegistrationForm(forms.Form):
+    service_code = forms.CharField(label='Код услуги', max_length=100, required=True)
+    password = forms.CharField(label='Пароль', max_length=100, required=True)
+    confirm_password = forms.CharField(label='Подтвердите пароль', max_length=100, required=True)
+
+
+class CTOLoginForm(forms.Form):
+    service_code = forms.CharField(label='Код услуги', max_length=100, required=True)
+    password = forms.CharField(label='Пароль', max_length=100, required=True)
+
+
+class TechReviewForm(forms.Form):
+    gov_number = forms.CharField(label='Гос. номер', max_length=100, required=True)
+    tech_pass = forms.CharField(label='Тех. паспорт', max_length=100, required=True)
+
+
 class UploadFileForm(forms.Form):
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
